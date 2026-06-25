@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
-import { ledgerEvents, offers, setupChecklist } from "../public/assets/data.mjs";
+import { ledgerEvents, offers, setupChecklist, sources } from "../public/assets/data.mjs";
 import { validatePaymentStack } from "../public/assets/business.mjs";
 
 describe("launch site data", () => {
@@ -32,6 +32,20 @@ describe("launch site data", () => {
     assert.ok(eventTypes.has("spend"));
     assert.ok(eventTypes.has("revenue"));
     assert.ok(eventTypes.has("blocker"));
+  });
+
+  it("links GitHub ledger events to the actual repository instead of the GitHub home page", () => {
+    const githubEvent = ledgerEvents.find((event) => event.type === "github");
+
+    assert.ok(githubEvent);
+    assert.match(githubEvent.publicLink, /^https:\/\/github\.com\/[^/]+\/[^/]+\/?$/);
+  });
+
+  it("lists the free analytics and search-console sources named in the setup guidance", () => {
+    const sourceLabels = sources.map((source) => source.label);
+
+    assert.ok(sourceLabels.includes("Cloudflare Web Analytics"));
+    assert.ok(sourceLabels.includes("Google Search Console"));
   });
 });
 
@@ -67,5 +81,12 @@ describe("static site files", () => {
     const workflow = readFileSync(".github/workflows/pages.yml", "utf8");
 
     assert.match(workflow, /enablement:\s*true/);
+  });
+
+  it("keeps blocked checkout copy explicit without implying checkout is live", () => {
+    const appModule = readFileSync("public/assets/app.mjs", "utf8");
+
+    assert.match(appModule, /Payment links needed/);
+    assert.doesNotMatch(appModule, /Square link needed/);
   });
 });

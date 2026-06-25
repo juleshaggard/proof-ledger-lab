@@ -200,7 +200,7 @@ function paymentButtons(offer) {
     return `
       <div class="checkout-panel" data-state="blocked">
         <p>${escapeHtml(checkout.reason)}</p>
-        <button class="primary-action" type="button" disabled>Square link needed</button>
+        <button class="primary-action" type="button" disabled>Payment links needed</button>
         <a class="secondary-action" href="${pathFor(`/intake/?offer=${offer.slug}`)}">Prepare intake draft</a>
         <ul>
           ${allOptions.map((option) => `<li>${escapeHtml(option.label)} slot: replace configured URL before launch.</li>`).join("")}

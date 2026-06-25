@@ -177,7 +177,7 @@ export const ledgerEvents = [
     offer: "all",
     summary: "Added test scripts, static hosting structure, GitHub Actions checks, and Pages publishing.",
     status: "complete",
-    publicLink: "https://github.com/"
+    publicLink: "https://github.com/juleshaggard/proof-ledger-lab"
   },
   {
     id: "evt-006",
@@ -213,7 +213,11 @@ export const sources = [
     url: "https://gumroad.com/pricing"
   },
   {
-    label: "Cloudflare Pages",
-    url: "https://pages.cloudflare.com/"
+    label: "Cloudflare Web Analytics",
+    url: "https://www.cloudflare.com/web-analytics/"
+  },
+  {
+    label: "Google Search Console",
+    url: "https://search.google.com/search-console/about"
   }
 ];
