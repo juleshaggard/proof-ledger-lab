@@ -17,7 +17,8 @@ Proof Ledger Lab is a static, free-tool-first revenue experiment site. It launch
 2. Create PayPal Business checkout links in your own PayPal account.
 3. Replace the `REPLACE_*` URLs in `public/assets/data.mjs`.
 4. Replace `brand.supportEmail` and `brand.mailingAddress` in `public/assets/data.mjs`.
-5. Enable GitHub Pages for the repository after pushing.
+
+GitHub Pages is enabled for this repository at `https://juleshaggard.github.io/proof-ledger-lab/`. If this project is forked or recreated under a new repository, enable Pages with GitHub Actions as the source.
 
 No card numbers, passwords, MFA codes, tax details, or bank details belong in this repository.
 

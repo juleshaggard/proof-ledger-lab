@@ -109,8 +109,8 @@ export const setupChecklist = [
   },
   {
     title: "GitHub repository and Pages",
-    status: "in_progress",
-    detail: "Local repository, tests, and GitHub Actions workflow are included; remote push depends on available GitHub auth."
+    status: "complete",
+    detail: "Repository, static checks, and GitHub Pages publishing are live."
   },
   {
     title: "Compliance identity",
@@ -175,9 +175,19 @@ export const ledgerEvents = [
     time: "2026-06-25T09:22:00-07:00",
     title: "GitHub packaging added",
     offer: "all",
-    summary: "Added test scripts, static hosting structure, and GitHub Actions checks so the experiment can be pushed and published.",
-    status: "in_progress",
+    summary: "Added test scripts, static hosting structure, GitHub Actions checks, and Pages publishing.",
+    status: "complete",
     publicLink: "https://github.com/"
+  },
+  {
+    id: "evt-006",
+    type: "launch",
+    time: "2026-06-25T09:26:00-07:00",
+    title: "GitHub Pages deployment verified",
+    offer: "all",
+    summary: "Published the static experiment lab and verified the live home, ledger, and offer subpages render without console errors.",
+    status: "complete",
+    publicLink: "https://juleshaggard.github.io/proof-ledger-lab/"
   }
 ];
 
