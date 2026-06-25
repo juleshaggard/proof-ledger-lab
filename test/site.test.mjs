@@ -62,4 +62,10 @@ describe("static site files", () => {
 
     assert.doesNotMatch(html, /https?:\/\/[^"']*(stripe|lemonsqueezy|lemon-squeezy)/i);
   });
+
+  it("lets the Pages workflow enable GitHub Pages on first deploy", () => {
+    const workflow = readFileSync(".github/workflows/pages.yml", "utf8");
+
+    assert.match(workflow, /enablement:\s*true/);
+  });
 });
