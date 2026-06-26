@@ -47,6 +47,17 @@ function track(eventName, payload = {}) {
   localStorage.setItem(key, JSON.stringify(current.slice(-80)));
 }
 
+function hasConfiguredSupportEmail() {
+  if (typeof brand.supportEmail !== "string") {
+    return false;
+  }
+
+  return (
+    /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(brand.supportEmail) &&
+    !/replace|example/i.test(brand.supportEmail)
+  );
+}
+
 function nav() {
   return `
     <header class="site-header">
@@ -317,6 +328,7 @@ function renderIntake() {
   const options = offers
     .map((offer) => `<option value="${offer.slug}">${escapeHtml(offer.title)}</option>`)
     .join("");
+  const supportInboxReady = hasConfiguredSupportEmail();
 
   shell(`
     <main>
@@ -325,6 +337,11 @@ function renderIntake() {
           <span class="eyebrow">Customer intake</span>
           <h1>Collect the details needed to fulfill only after confirmed payment.</h1>
           <p>This static form creates a support-email draft for v1. Replace the support email and connect a free form tool when payment links go live.</p>
+          ${
+            supportInboxReady
+              ? ""
+              : `<p id="support-inbox-blocker" class="support-blocker"><strong>Support inbox setup needed.</strong> Replace the support email before creating intake drafts.</p>`
+          }
         </div>
         <form id="intake-form" class="intake-form" novalidate>
           <label>
@@ -351,7 +368,7 @@ function renderIntake() {
             <textarea name="notes" rows="5" placeholder="Tell us what changed, what is not converting, or what competitors worry you."></textarea>
           </label>
           <div class="form-actions">
-            <button class="primary-action" type="submit">Create intake email</button>
+            <button class="primary-action" type="submit" ${supportInboxReady ? "" : "disabled"}>${supportInboxReady ? "Create intake email" : "Support inbox setup needed"}</button>
             <p id="form-status" role="status"></p>
           </div>
         </form>
@@ -370,6 +387,13 @@ function renderIntake() {
     event.preventDefault();
     const form = event.currentTarget;
     const status = document.querySelector("#form-status");
+
+    if (!supportInboxReady) {
+      status.textContent = "Replace the support email before creating intake drafts.";
+      status.dataset.state = "error";
+      return;
+    }
+
     const data = Object.fromEntries(new FormData(form).entries());
 
     if (!data.url || !data.email) {

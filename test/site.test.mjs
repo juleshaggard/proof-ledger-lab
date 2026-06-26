@@ -89,4 +89,11 @@ describe("static site files", () => {
     assert.match(appModule, /Payment links needed/);
     assert.doesNotMatch(appModule, /Square link needed/);
   });
+
+  it("keeps intake draft creation blocked until the support inbox is configured", () => {
+    const appModule = readFileSync("public/assets/app.mjs", "utf8");
+
+    assert.match(appModule, /Support inbox setup needed/);
+    assert.match(appModule, /Replace the support email before creating intake drafts\./);
+  });
 });
