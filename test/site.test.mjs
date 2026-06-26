@@ -90,6 +90,14 @@ describe("static site files", () => {
     assert.doesNotMatch(appModule, /Square link needed/);
   });
 
+  it("derives the home operations snapshot from the shared ledger and budget policy", () => {
+    const appModule = readFileSync("public/assets/app.mjs", "utf8");
+
+    assert.match(appModule, /const totals = ledgerTotals\(ledgerEvents\);/);
+    assert.match(appModule, /money\(budgetPolicy\.totalBudgetUsd\)/);
+    assert.match(appModule, /money\(totals\.spendUsd\).*spent/);
+  });
+
   it("keeps intake draft creation blocked until the support inbox is configured", () => {
     const appModule = readFileSync("public/assets/app.mjs", "utf8");
 

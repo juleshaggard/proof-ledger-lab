@@ -1,4 +1,5 @@
 import {
+  budgetPolicy,
   canSpend,
   decideExperiment,
   getCheckoutState,
@@ -95,6 +96,7 @@ function statusPill(status) {
 }
 
 function renderOperationsVisual() {
+  const totals = ledgerTotals(ledgerEvents);
   const rows = offers
     .map((offer, index) => {
       const decision = decideExperiment(offer.metrics);
@@ -112,12 +114,12 @@ function renderOperationsVisual() {
     <section class="ops-visual" aria-label="Experiment operations preview">
       <div class="ops-topline">
         <span>Live offer board</span>
-        <strong>$0 spent</strong>
+        <strong>${money(totals.spendUsd)} spent</strong>
       </div>
       <div class="signal-grid">
         <div>
           <span>Budget</span>
-          <strong>${money(brand.budgetUsd)}</strong>
+          <strong>${money(budgetPolicy.totalBudgetUsd)}</strong>
         </div>
         <div>
           <span>Offers</span>
